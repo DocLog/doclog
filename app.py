@@ -7,7 +7,7 @@ app = create_app()
 
 @app.route("/")
 def index_page():
-    secret_message = os.environ.get("SECRET-MESSAGE")
+    secret_message = os.environ.get("SECRET_MESSAGE")
     return f"<h1>{secret_message}</h1>"
 
 
