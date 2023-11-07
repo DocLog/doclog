@@ -1,11 +1,11 @@
-from flask import Flask
+from api import create_app
 
-app = Flask("doclog")
+app = create_app()
 
 
 @app.route("/")
 def index_page():
-    return "<h1>Hello, world!</h1>"
+    return "<h1>Still working!</h1>"
 
 
 if __name__ == "__main__":
