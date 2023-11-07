@@ -23,6 +23,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Check code format (Black)
-        run: black . --check --diff
+        run: black api --check --diff
       - name: Run static code analysis (Pylint)
-        run: pylint doclog_api --disable=C0114,W0718,W0719,R0903,W0613
+        run: pylint api --disable=C0114,W0718,W0719,R0903,W0613
