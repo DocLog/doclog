@@ -30,7 +30,7 @@ jobs:
           CI=false npm run build
           cd ..
           mv frontend/build .
-          rmdir frontend
+          rm frontend -r
       - name: Build web app
         uses: azure/appservice-build@v3
         with:
