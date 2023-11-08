@@ -1,9 +1,10 @@
-from doclog_api.common import db
-from doclog_api.model import BaseModel
-from doclog_api.schema import BaseSchema
 from marshmallow import ValidationError
 from sqlalchemy import String
 from sqlalchemy.orm import Query
+
+from ..common import db
+from ..model import BaseModel
+from ..schema import BaseSchema
 
 
 class BaseService:
