@@ -11,5 +11,7 @@ venv
 __pycache__
 
 # log files
-
 log/
+
+# Built React App folder
+build/
