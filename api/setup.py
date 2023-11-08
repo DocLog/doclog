@@ -2,9 +2,12 @@ import os
 from datetime import timedelta
 
 from flask import Flask
+from flask_cors import CORS
+from flask_restful import Api
 
 from .common import db, jwt, ma, password_hasher, rate_limiter
 from .log import setup_logging_system
+from .route import set_routes
 
 
 def create_app() -> Flask:
@@ -17,6 +20,9 @@ def create_app() -> Flask:
     _setup_rate_limiter(app)
     _setup_database_interface(app)
     _setup_serializer(app)
+    _setup_cors_policy(app)
+    _estabilish_routes(app)
+    
 
     return app
 
@@ -151,3 +157,34 @@ def _setup_rate_limiter(app: Flask):
 
     app.logger.debug("Initializing rate limiter...")
     rate_limiter.init_app(app)
+
+
+def _setup_cors_policy(app: Flask):
+    """
+    Setup CORS policy for the application.
+
+    This function sets up the Cross Origin Resource Sharing policy for for the
+    application.
+
+    Args:
+        app (Flask): The Flask application instance.
+    """
+
+    app.logger.debug("Setting up CORS...")
+    CORS(app)
+
+
+def _estabilish_routes(app: Flask):
+    """
+    Establish API routes for the application.
+
+    This function establishes the API routes by creating an instance of the Flask-RESTful
+    Api class and setting up the available routes using the set_routes function.
+
+    Args:
+        app (Flask): The Flask application instance.
+    """
+
+    app.logger.debug("Estabilishing routes...")
+    api = Api(app)
+    set_routes(api)
