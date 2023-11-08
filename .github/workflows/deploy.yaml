@@ -10,9 +10,6 @@ env:
   AZURE_WEBAPP_NAME: doclog
 
 jobs:
-  build-python:
-    runs-on: ubuntu-latest
-    
   deploy:
     runs-on: ubuntu-latest
     steps:
