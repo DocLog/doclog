@@ -1,17 +1,11 @@
-import os
+from api import create_app
 
-from flask import Flask
-
-# from api import create_app
-
-# app = create_app()
-app = Flask(__name__)
+app = create_app()
 
 
 @app.route("/")
-def index_page():
-    secret_message = os.environ.get("SECRET_MESSAGE")
-    return f"<h1>{secret_message}</h1>"
+def index():
+    return app.send_static_file("index.html")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,52 @@
+
+.container_medicine{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 70vh;
+    width: 50vw;
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0, 0.19);
+    text-align: center;
+    padding: 2rem;
+    gap: 1vh; 
+}
+
+.group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_medicine{
+    width: 30vw;
+    border-style: solid;
+    border-width: 0px 0px 3px 0px;
+    border-radius: 5px 5px 0 0;
+    background-color: rgba(102, 102, 109, 0.199);
+    color: #000;
+    outline: 0;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.button_search{
+    font-size: 20px;
+    margin-left: 5px;
+    padding: 5px;
+    background-color: rgba(0, 9, 128, 0.774);
+    color: white;
+    cursor: pointer;
+}
+
+.box_medicine{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50vw;
+    height: 60vh;
+    overflow-y: auto;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+}
+
+

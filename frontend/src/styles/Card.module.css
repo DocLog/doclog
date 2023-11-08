@@ -1,0 +1,28 @@
+.container{
+    width: 31%;
+    height: 31%;
+    display: flex;
+    /* border: solid 1px #000; */
+    border-radius: 5px;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0, 0.19);
+    /* gap: 20%; */
+}
+
+.title{
+    font-weight: bold;
+}
+.actions_card{
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    
+}
+
+.actions_card img{
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
