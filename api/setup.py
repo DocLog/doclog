@@ -11,7 +11,7 @@ from .route import set_routes
 
 
 def create_app() -> Flask:
-    app = Flask("doclog")
+    app = Flask("doclog", static_folder="frontend/build", static_url_path="/")
 
     setup_logging_system()
     _apply_app_settings(app)
@@ -22,7 +22,6 @@ def create_app() -> Flask:
     _setup_serializer(app)
     _setup_cors_policy(app)
     _estabilish_routes(app)
-    
 
     return app
 
