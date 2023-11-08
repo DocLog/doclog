@@ -1,8 +1,11 @@
 import os
 
-from api import create_app
+from flask import Flask
 
-app = create_app()
+# from api import create_app
+
+# app = create_app()
+app = Flask(__name__)
 
 
 @app.route("/")
