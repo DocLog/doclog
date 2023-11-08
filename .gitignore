@@ -4,6 +4,9 @@
 # Virtual Environment
 venv
 
+# Environment variables
+.env
+
 # Python cache files
 __pycache__
 
