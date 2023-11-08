@@ -1,0 +1,941 @@
+openapi: 3.0.3
+info:
+  title: DocLog - OpenAPI 3.0
+  description: Documentação de APIs do projeto DocLog
+  # termsOfServices:
+  # contact:
+  #   email:
+  # license:
+  #   name:
+  #   url:
+  version: 1.0.0
+# externalDocs:
+#   description: 
+#   url:
+# servers:
+#   - url: https://petstore3.swagger.io/api/v3
+tags:
+  - name: Patient
+    description: Information about patients
+  - name: Healthcare Professional
+    description: Information about professionals
+  - name: Patient Medicine
+    description: Information about patient medicines
+  - name: Occurrence
+    description: Information about occurences?
+  - name: Medicine
+    description: Information about medicines
+  - name: Patient Condition
+    description: Information about patient conditions
+  - name: Condition
+    description: Information about conditions
+
+#     externalDocs:
+#       description: Find out more
+#       url: http://swagger.io
+#   - name: store
+#     description: Access to Petstore orders
+#     externalDocs:
+#       description: Find out more about our store
+#       url: http://swagger.io
+#   - name: user
+#     description: Operations about user
+
+paths:
+  /patient/{patient-id}:
+    get:
+      tags:
+        - Patient
+      summary: Find patient by id
+      description: Returns a single patient 
+      operationId: getPatientById
+      parameters:
+        - name: patient-id
+          in: path 
+          description: Id of Patient to return 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Patient not found
+
+    delete:
+      tags:
+        - Patient
+      summary: Deletes a patient
+      description: delete a patient
+      operationId: deletePatient
+      parameters:
+        - name: patient-id
+          in: path 
+          description: Patient id to delete 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '400':
+          description: Invalid patient value
+  
+  /patient:
+    post:
+      tags:
+       - Patient
+      summary: Add a new Patient
+      description: Add a new Patient
+      operationId: addPatient
+      requestBody:
+        description: Create a new Patient
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        '405':
+          description: Invalid input
+
+    put:
+      tags:
+       - Patient
+      summary: Update an existing Patient
+      description: Update an existing patient by Id
+      operationId: updatePatient
+      requestBody:
+        description: Update an existent Patient
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Patient'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Patient not found
+        '405':
+          description: Validation exception
+  
+
+  /professional/{professional-id}:
+    get:
+      tags:
+        - Healthcare Professional
+      summary: Find professional by id
+      description: Returns a single professional 
+      operationId: getProfessionalById
+      parameters:
+        - name: professional-id
+          in: path 
+          description: Id of professional to return 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthcareProfessional'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/HealthcareProfessional'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Professional not found
+
+    delete:
+      tags:
+        - Healthcare Professional
+      summary: Deletes a professional
+      description: delete a professional
+      operationId: deleteProfessional
+      parameters:
+        - name: professional-id
+          in: path 
+          description: Professional id to delete 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '400':
+          description: Invalid professional value
+  
+  /professional:
+    post:
+      tags:
+       - Healthcare Professional
+      summary: Add a new professional
+      description: Add a new professional
+      operationId: addProfessional
+      requestBody:
+        description: Create a new professional
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HealthcareProfessional'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthcareProfessional'
+        '405':
+          description: Invalid input
+
+    put:
+      tags:
+       - Healthcare Professional
+      summary: Update an existing professional
+      description: Update an existing professional by Id
+      operationId: updateProfessional
+      requestBody:
+        description: Update an existent professional
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HealthcareProfessional'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/HealthcareProfessional'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthcareProfessional'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Professional not found
+        '405':
+          description: Validation exception
+  
+  /patient-medicine/{patient-medicine-id}:
+    get:
+      tags:
+        - Patient Medicine
+      summary: Find patient medicine by id
+      description: Returns a single patient medicine 
+      operationId: getPatientMedicineById
+      parameters:
+        - name: patient-medicine-id
+          in: path 
+          description: Id of patient medicine to return 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientMedicine'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PatientMedicine'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Patient medicine not found
+
+    delete:
+      tags:
+        - Patient Medicine
+      summary: Deletes a patient medicine
+      description: delete a patient medicine
+      operationId: deletePatientMedicine
+      parameters:
+        - name: patient-medicine-id
+          in: path 
+          description: Patient medicine id to delete 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '400':
+          description: Invalid patient medicine value
+  
+  /patient-medicine:
+    post:
+      tags:
+       - Patient Medicine
+      summary: Add a new patient medicine
+      description: Add a new patient medicine
+      operationId: addPatientMedicine
+      requestBody:
+        description: Create a new patient medicine
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientMedicine'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientMedicine'
+        '405':
+          description: Invalid input
+
+    put:
+      tags:
+       - Patient Medicine
+      summary: Update an existing patient medicine
+      description: Update an existing patient medicine by Id
+      operationId: updatePatientMedicine
+      requestBody:
+        description: Update an existent patient medicine
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientMedicine'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PatientMedicine'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientMedicine'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Patient medicine not found
+        '405':
+          description: Validation exception
+ 
+  /occurrence/{occurrence-id}:
+    get:
+      tags:
+        - Occurrence
+      summary: Find occurrence by id
+      description: Returns a single occurrence 
+      operationId: getOccurrenceById
+      parameters:
+        - name: occurrence-id
+          in: path 
+          description: Id of occurrence to return 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occurrence'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Occurrence'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Occurrence not found
+
+    delete:
+      tags:
+        - Occurrence
+      summary: Deletes a occurrence
+      description: delete a occurrence
+      operationId: deleteOccurrence
+      parameters:
+        - name: occurrence-id
+          in: path 
+          description: Occurrence id to delete 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '400':
+          description: Invalid occurrence value
+  
+  /occurrence:
+    post:
+      tags:
+       - Occurrence
+      summary: Add a new occurrence
+      description: Add a new occurrence
+      operationId: addOccurrence
+      requestBody:
+        description: Create a new occurrence
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Occurrence'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occurrence'
+        '405':
+          description: Invalid input
+
+    put:
+      tags:
+       - Occurrence
+      summary: Update an existing occurrence
+      description: Update an existing occurrence by Id
+      operationId: updateOccurrence
+      requestBody:
+        description: Update an existent occurrence
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Occurrence'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Occurrence'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occurrence'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: occurrence not found
+        '405':
+          description: Validation exception
+ 
+
+  /medicine/{medicine-id}:
+    get:
+      tags:
+        - Medicine
+      summary: Find medicine by id
+      description: Returns a single medicine 
+      operationId: getMedicineById
+      parameters:
+        - name: medicine-id
+          in: path 
+          description: Id of medicine to return 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medicine'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Medicine'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Medicine not found
+
+    delete:
+      tags:
+        - Medicine
+      summary: Deletes a medicine
+      description: delete a medicine
+      operationId: deleteMedicine
+      parameters:
+        - name: medicine-id
+          in: path 
+          description: Medicine id to delete 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '400':
+          description: Invalid medicine value
+  
+  /medicine:
+    post:
+      tags:
+       - Medicine
+      summary: Add a new medicine
+      description: Add a new medicine
+      operationId: addMedicine
+      requestBody:
+        description: Create a new medicine
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Medicine'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medicine'
+        '405':
+          description: Invalid input
+
+    put:
+      tags:
+       - Medicine
+      summary: Update an existing medicine
+      description: Update an existing medicine by Id
+      operationId: updateMedicine
+      requestBody:
+        description: Update an existent medicine
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Medicine'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Medicine'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medicine'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Medicine not found
+        '405':
+          description: Validation exception
+ 
+  /patient-condition/{patient-condition-id}:
+    get:
+      tags:
+        - Patient Condition
+      summary: Find patient condition by id
+      description: Returns a single patient condition 
+      operationId: getPatientConditionById
+      parameters:
+        - name: patient-condition-id
+          in: path 
+          description: Id of patient condition to return 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientCondition'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PatientCondition'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Patient condition not found
+
+    delete:
+      tags:
+        - Patient Condition
+      summary: Deletes a patient condition
+      description: delete a patient condition
+      operationId: deletePatientCondition
+      parameters:
+        - name: patient-condition-id
+          in: path 
+          description: Patient condition id to delete 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '400':
+          description: Invalid patient condition value
+  
+  /patient-condition:
+    post:
+      tags:
+       - Patient Condition
+      summary: Add a new patient condition
+      description: Add a new patient condition
+      operationId: addPatientCondition
+      requestBody:
+        description: Create a new patient condition
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientCondition'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientCondition'
+        '405':
+          description: Invalid input
+
+    put:
+      tags:
+       - Patient Condition
+      summary: Update an existing patient condition
+      description: Update an existing patient condition by Id
+      operationId: updatePatientCondition
+      requestBody:
+        description: Update an existent patient condition
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientCondition'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PatientCondition'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientCondition'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Patient condition not found
+        '405':
+          description: Validation exception
+ 
+  /condition/{condition-id}:
+    get:
+      tags:
+        - Condition
+      summary: Find condition by id
+      description: Returns a single condition 
+      operationId: getConditionById
+      parameters:
+        - name: condition-id
+          in: path 
+          description: Id of condition to return 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Condition'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Condition'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Condition not found
+
+    delete:
+      tags:
+        - Condition
+      summary: Deletes a condition
+      description: delete a condition
+      operationId: deleteCondition
+      parameters:
+        - name: condition-id
+          in: path 
+          description: Condition id to delete 
+          required: true 
+          schema: 
+            type: integer 
+            format: int64 
+      responses:
+        '400':
+          description: Invalid condition value
+
+  /condition:
+    post:
+      tags:
+        - Condition
+      summary: Add a new condition
+      description: Add a new condition
+      operationId: addCondition
+      requestBody:
+        description: Create a new condition
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Condition'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Condition'
+        '405':
+          description: Invalid input
+
+    put:
+      tags:
+        - Condition
+      summary: Update an existing condition
+      description: Update an existing condition by Id
+      operationId: updateCondition
+      requestBody:
+        description: Update an existent condition
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Condition'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Condition'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Condition'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Condition not found
+        '405':
+          description: Validation exception
+
+
+
+components:
+  schemas:
+    Patient:
+      required:
+        - "name"
+        - "surname"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: Carlos
+        surname:
+          type: string
+          example: Carlos Vieira 
+        cpf:
+          type: string
+          example: "12312312345"
+        birthDate:
+          type: string
+          example: "12/02/2001"
+        registerDate:
+          type: string
+          example: "01/01/2023"
+        bloodType:
+          type: string
+          example: "A+"
+        notes:
+          type: string
+          example: "Intolerância a lactose"
+
+    PatientMedicine:
+      required:
+        - "patientId"
+        - "medicineId"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        patientId:
+          type: integer
+          format: int64
+          example: 123456
+        medicineId:
+          type: integer
+          format: int64
+          example: 900001
+        notes:
+          type: string
+          example: "..."
+    
+    Medicine:
+      required:
+        - "name"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: "Rivotril"
+        description:
+          type: string
+          example: "2x ao dia"
+        dosage:
+          type: number
+          example: 20.0
+        dosageUnit:
+          type: string
+          example: "ml"
+
+    PatientCondition:
+      required:
+        - "conditionId"
+        - "patientId"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        conditionId:
+          type: integer
+          format: int64
+          example: 900001
+        patientId:
+          type: integer
+          format: int64
+          example: 123456
+        notes:
+          type: string
+          example: "..."
+    
+    Condition:
+      required:
+        - "name"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: "condition test"
+        description:
+          type: string
+          example: "description test"
+
+    Occurrence:
+      required:
+        - "patientId"
+        - "professionalId"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        patientId:
+          type: integer
+          format: int64
+          example: 900001
+        professionalId:
+          type: integer
+          format: int64
+          example: 400001
+        wasEmergency:
+          type: boolean
+          example: false
+        dateTime:
+          type: string
+          example: "01/01/2023"
+        notes:
+          type: string
+          example: "Intolerância a lactose"
+    
+    HealthcareProfessional:
+      required:
+        - "name"
+        - "surname"
+        - "CRM"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: "Caio"
+        surname:
+          type: string
+          example: "Rodrigues"
+        cpf:
+          type: string
+          example: "12312312345"
+        CRM:
+          type: string
+          example: "34ASDE2"
+        birthDate:
+          type: string
+          example: "01/01/2023"
+        
+        
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+
