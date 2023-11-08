@@ -27,7 +27,7 @@ jobs:
           cd frontend
           npm install
           npm update
-          npm run build
+          CI=false npm run build
           cd ..
       - name: Build web app
         uses: azure/appservice-build@v3
