@@ -59,6 +59,17 @@ export default function GenericForm({ title, initialValues, fieldConfig, onSubmi
                     }) }
                 </select>
             )
+        }else if(type === 'checkbox'){
+            return(
+                <input
+                type={type}
+                placeholder={fieldName}
+                id={fieldName}
+                name={fieldName}
+                value={formData[fieldName]}
+                onChange={(e) => handleFieldChange(fieldName, e.target.checked)}
+            />
+            )
         }else{
             return(
                 <input

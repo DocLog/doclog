@@ -17,6 +17,11 @@ export function getConditionById(id){
     return axios.get(`${API_URI}/condition/${id}`)
 }
 
+export function getConditionRecordByPatientId(id){
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.get(`${API_URI}/condition?filter=patient_id:${id}`)
+}
 
 
 export function updateConditionRecord(data){
@@ -50,7 +55,11 @@ export function getProfessionalById(id){
     return axios.get(`${API_URI}/healthcare-professional/${id}`)
 }
 
-
+export function getProfessionalByCRM(crm){
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.get(`${API_URI}/healthcare-professional?filter=crm:${crm}`)
+}
 
 export function updateProfessionalRecord(data){
     axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8'
@@ -158,6 +167,12 @@ export function getMedicineRecordById(id){
     return axios.get(`${API_URI}/medicine/${id}`)
 }
 
+export function getMedicineRecordByPatientId(id){
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.get(`${API_URI}/medicine?filter=patient_id:${id}`)
+}
+
 export function sendMedicineRecord(data){
     axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8'
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
@@ -179,3 +194,39 @@ export function deleteMedicineRecordById(id){
 }
 
 // Medicine CRUD -- END
+
+// Occurrence CRUD 
+
+export function getOccurrenceRecords(id){
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.get(`${API_URI}/occurrence?filter=patient_id:${id}`)
+}
+
+export function getOccurrenceRecordById(id){
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.get(`${API_URI}/occurrence/${id}`)
+}
+
+export function sendOccurrenceRecord(data){
+    axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8'
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.post(`${API_URI}/occurrence`, data)
+}
+
+export function updateOccurrenceRecord(data){
+    axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8'
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.put(`${API_URI}/occurrence`, data)
+}
+
+export function deleteOccurrenceRecordById(id){
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.delete(`${API_URI}/occurrence/${id}`)
+}
+
+//  Occurrence CRUD -- END
