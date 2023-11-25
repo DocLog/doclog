@@ -11,6 +11,12 @@ from .route import set_routes
 
 
 def create_app() -> Flask:
+    """
+    Initialize and return the DocLog Flask API.
+
+    Returns:
+        Flask: DocLog API Flask object.
+    """
     app = Flask("doclog", static_folder="build", static_url_path="/")
 
     setup_logging_system()
