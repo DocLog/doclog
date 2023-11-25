@@ -41,6 +41,13 @@ export default function GenericSearch({ placeholder, path, getRecords, getRecord
     }
 
     function onSearch(){
+        const data = properties.filter((obj) => (
+            obj.name?.toUpperCase().includes(textSearch.toUpperCase()) || 
+            obj.id?.toString().toUpperCase().includes(textSearch.toUpperCase()) || 
+            obj.cpf?.toUpperCase().includes(textSearch.toUpperCase()))
+        )
+
+        setSearch(data)
     }
 
 
