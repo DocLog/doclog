@@ -3,29 +3,39 @@ import { useParams } from 'react-router-dom';
 import { getOccurrenceRecordById, sendOccurrenceRecord, getUserById, getProfessionalByCRM } from '../../common/api';
 import GenericForm from "./GenericForm";
 import { useEffect, useState } from 'react';
+import { showAlert } from "../../common/swalAlert";
 
 export default function OccurrenceForm(){
     const navigate = useNavigate();
-    const { patient_id } = useParams();
+    const { id } = useParams();
     const [ healthId, setHealthId] = useState(null)
 
     const d = new Date()
     async function submitForm(formData){
+        if(!healthId){
+            await getProfessionByCRMData(formData.healthcare_professional_id)
+        }
         let data = {
             "was_emergency" : formData.was_emergency,
             "datetime" : d.getFullYear().toString() +'-' +(d.getMonth() + 1).toString() +'-' +d.getDate().toString() + 'T' + d.getHours().toString() + ':' + d.getMinutes().toString() + ':' + d.getSeconds().toString(),
             "notes" : formData.notes,
-            "patient_id": patient_id,
-            "healthcare_professional_id": healthId ?? await getProfessionByCRMData(formData.healthcare_professional_id),
+            "patient_id": formData.patient_id,
+            "healthcare_professional_id": healthId,
         }
         try{
-            console.log(data)
-            const response = await sendOccurrenceRecord(data)
-            console.log(response)
-            alert('Registro Criado com Sucesso!')
-            navigate('/occurrences')
+
+            await sendOccurrenceRecord(data)
+            showAlert('Registro Criado com Sucesso!', 'success')
+            navigate('/occurrences/' + formData.patient_id)
+
         }catch(err){
-            console.log('deerr')
+            if(err.response.status == 422){
+                showAlert('Erro ao Salvar os dados!', 'error')
+            }
+
+            if(err.response.status == 401){
+                showAlert('Não logado! Faça Login', 'error')
+            }
         }
     }
 
@@ -42,7 +52,6 @@ export default function OccurrenceForm(){
 
     async function getProfessionByCRMData(crm){
         const { data } = await getProfessionalByCRM(crm)
-        console.log(data)
         setHealthId(data[0].id)
     }
 
@@ -53,15 +62,15 @@ export default function OccurrenceForm(){
                 was_emergency: '',
                 datetime: new Date(),
                 healthcare_professional_id: '',
-                patient_id: patient_id,
+                patient_id: id,
                 notes: ''
             }}
             fieldConfig={{
-                was_emergency: { type: 'checkbox' },
-                datetime: { type: 'datetime-local'},
-                healthcare_professional_id: { type: 'text' },
-                patient_id: {type: 'text'},
-                notes: {type: 'textarea'}
+                was_emergency: { type: 'checkbox' , label: 'É uma emergência?'},
+                datetime: { type: 'datetime-local', label: 'Data da Ocorrência'},
+                healthcare_professional_id: { type: 'text' , label: 'Id do Profissional'},
+                patient_id: {type: 'text', label: 'Id do Paciente'},
+                notes: {type: 'textarea', label: 'Observações'}
             }}
             onSubmit={submitForm}
             onLoad={getOccurrenceRecordById}

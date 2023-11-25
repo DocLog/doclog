@@ -1,10 +1,8 @@
-import { useNavigate} from 'react-router-dom';
 import { getProfessionalById, sendProfessionalRecord } from '../../common/api';
 import GenericForm from "./GenericForm";
+import { showAlert } from "../../common/swalAlert";
 
 export default function HealthCareProfessionalForm( { onFinished } ){
-    const navigate = useNavigate();
-
 
     async function submitForm(formData){
         let data = {
@@ -15,13 +13,19 @@ export default function HealthCareProfessionalForm( { onFinished } ){
             "crm": formData.crm
         }
         try{
-            console.log(data)
+
             const response = await sendProfessionalRecord(data)
-            console.log(response)
             onFinished(response)
-            alert('Registro Criado com Sucesso!')
+            showAlert('Registro Criado com Sucesso!', 'success')
+
         }catch(err){
-            console.log('deerr')
+            if(err.response.status == 422){
+                showAlert('Erro ao Salvar os dados!', 'error')
+            }
+
+            if(err.response.status == 401){
+                showAlert('Não logado! Faça Login', 'error')
+            }
         }
     }
 
@@ -36,11 +40,11 @@ export default function HealthCareProfessionalForm( { onFinished } ){
                 crm: ''
             }}
             fieldConfig={{
-                name : { type: 'text' },
-                surname : { type: 'text'},
-                cpf :{ type: 'text'},
-                birth_date : {type: 'date'},
-                crm : {type: 'text'}
+                name : { type: 'text' , label: 'Nome'},
+                surname : { type: 'text', label: 'Sobrenome'},
+                cpf :{ type: 'text', label: 'CPF'},
+                birth_date : {type: 'date', label: 'Data de Nascimento'},
+                crm : {type: 'text', label: 'CRM'}
             }}
             onSubmit={submitForm}
             onLoad={getProfessionalById}

@@ -42,11 +42,11 @@ export default function PatientForm(){
     }
 
     function handleMedicines(){
-        navigate('/medicines/' + id)
+        navigate('/patient-medicine/' + id)
     }
 
     function handleConditions(){
-        navigate('/conditions/' + id)
+        navigate('/patient-condition/' + id)
     }
 
     

@@ -1,7 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/AuthContext";
 import { useNavigate, useParams } from 'react-router-dom';
-import styles from '../../styles/Form.module.css'
+import styles from '../../styles/Form.module.css';
+import { isEmptyFields, isValidDate } from '../../common/validation';
+import Swal from "sweetalert2";
 
 export default function GenericForm({ title, initialValues, fieldConfig, onSubmit, onLoad}){
     const { isLogged } = useContext(Context);
@@ -9,6 +11,15 @@ export default function GenericForm({ title, initialValues, fieldConfig, onSubmi
     const { id } = useParams();
 
     const [formData, setFormData] = useState(initialValues ?? {})
+
+    function showAlert(message){
+        Swal.fire({
+            title: "Mensagem",
+            text: message,
+            icon: "info",
+            confirmButtonText: 'OK'
+        })
+    }
 
     useEffect(() => {
         if(!isLogged){
@@ -22,6 +33,7 @@ export default function GenericForm({ title, initialValues, fieldConfig, onSubmi
                     
                     setFormData(formData => ({ ...formData, [obj] : data[obj]}))
                     
+                    console.log(formData)
                     return true;
                 })
             })
@@ -30,6 +42,16 @@ export default function GenericForm({ title, initialValues, fieldConfig, onSubmi
     }, [isLogged, navigate, id, onLoad])
 
     function submitForm(){
+        let result1 = isEmptyFields(formData);
+        let result2 = isValidDate(formData);
+        if(result1.length !== 0){
+            showAlert(result1)
+            return;
+        }
+        if(result2.length !== 0){
+            showAlert(result2)
+            return;
+        }
         onSubmit(formData);
     }
 
@@ -38,48 +60,65 @@ export default function GenericForm({ title, initialValues, fieldConfig, onSubmi
     }
     
     function renderFields(fieldName, fieldData){
-        const { type, options} = fieldData
+        const { type, options, label} = fieldData
         if(type === 'textarea'){
-            return(<textarea
-                        type="text"
-                        placeholder={fieldName}
-                        id={fieldName}
-                        name={fieldName}
-                        value={formData[fieldName]}
-                        rows='3'
-                        onChange={(e) => handleFieldChange(fieldName, e.target.value)}
-                        />)
-        }else if(type === 'select'){
             return(
-                <select name={fieldName} onChange={(e) => handleFieldChange(fieldName, e.target.value)} value={formData[fieldName]}>
-                    <option value="">Selecione uma opção</option>
-                    {options.map((opt) => {
-                        return <option key={opt} value={opt}>{opt}</option>
-                        
-                    }) }
-                </select>
-            )
-        }else if(type === 'checkbox'){
-            return(
-                <input
-                type={type}
-                placeholder={fieldName}
-                id={fieldName}
-                name={fieldName}
-                value={formData[fieldName]}
-                onChange={(e) => handleFieldChange(fieldName, e.target.checked)}
-            />
-            )
-        }else{
-            return(
-                <input
-                    type={type}
-                    placeholder={fieldName}
+            <>
+                <label htmlFor={fieldName}>{label.charAt(0).toUpperCase() + label.slice(1)}</label>
+                <textarea
+                    type="text"
+                    placeholder={label}
                     id={fieldName}
                     name={fieldName}
                     value={formData[fieldName]}
+                    rows='3'
                     onChange={(e) => handleFieldChange(fieldName, e.target.value)}
                 />
+            </>
+            )
+        }else if(type === 'select'){
+            return(
+                <>
+                    <label htmlFor={fieldName}>{label.charAt(0).toUpperCase() + label.slice(1)}</label>
+                    <select name={fieldName} onChange={(e) => handleFieldChange(fieldName, e.target.value)} value={formData[fieldName]}>
+                        <option value="">Selecione uma opção</option>
+                        {options.map((opt) => {
+                            return <option key={opt} value={opt}>{opt}</option>
+                            
+                        }) }
+                    </select>
+                </>
+                
+            )
+        }else if(type === 'checkbox'){
+            return(
+                <>
+                    <label htmlFor={fieldName}>{label.charAt(0).toUpperCase() + label.slice(1)}</label>
+                    <input
+                    type={type}
+                    placeholder={label}
+                    id={fieldName}
+                    name={fieldName}
+                    value={formData[fieldName]}
+                    onChange={(e) => handleFieldChange(fieldName, e.target.checked)}
+                    />
+                </>
+                
+            )
+        }else{
+            return(
+                <>
+                    <label htmlFor={fieldName}>{label.charAt(0).toUpperCase() + label.slice(1)}</label>
+                    <input
+                        type={type}
+                        placeholder={label}
+                        id={fieldName}
+                        name={fieldName}
+                        value={formData[fieldName]}
+                        onChange={(e) => handleFieldChange(fieldName, e.target.value)}
+                    />
+                </>
+                
             )
         }
 
@@ -93,7 +132,6 @@ export default function GenericForm({ title, initialValues, fieldConfig, onSubmi
             {Object.keys(formData).map((field) => (
                 field !== 'id' ?
                 <div key={field} className={styles.form_group}>
-                    <label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                     {field !== 'id' ? renderFields(field, fieldConfig[field]) : ''}
                 </div> 
                 : ''

@@ -10,6 +10,8 @@ export default function GenericSearch({ placeholder, path, getRecords, getRecord
 
     const { isLogged } = useContext(Context)
     const [properties, setProperties] = useState([])
+    const [search, setSearch] = useState([])
+    const [textSearch, setTextSearch] = useState('')
     const navigate = useNavigate()
     const { id } = useParams()
 
@@ -24,21 +26,26 @@ export default function GenericSearch({ placeholder, path, getRecords, getRecord
     }, [isLogged, properties, navigate])
 
     async function handleGetRecords(){
-        console.log(id)
         if(id){
             const { data } = await getRecordsFromPatient(id);
 
             setProperties(data);
+            setSearch(properties);
         }else{
             const { data } = await getRecords();
 
             setProperties(data);
+            setSearch(data);
         }
         
     }
 
+    function onSearch(){
+    }
+
+
     function addAction(e){
-        navigate(path+ e.target.id)
+        navigate(path)
     }
 
     function editAction(e){
@@ -54,14 +61,14 @@ export default function GenericSearch({ placeholder, path, getRecords, getRecord
     return(
         <div className={styles.container_medicine}>
             <div id='search-area' className={styles.group}>
-                <input name='search' placeholder={placeholder} className={styles.input_medicine}></input>
-                <button className={styles.button_search}>Pesquisar</button>
+                <input name='search' placeholder={placeholder} className={styles.input_medicine} onChange={(e) => {setTextSearch(e.target.value)}}></input>
+                <button className={styles.button_search} onClick={onSearch}>Pesquisar</button>
                 <button className={styles.button_search} id={id} onClick={addAction}>Adicionar</button>
             </div>
             <div id='results' className={styles.box_medicine}>
-                { properties.map(function(e) {
+                { search.map(function(e) {
                     console.log(e)
-                    return(<Card key={e.id} id={e.id} content={(e.name ?? ('Occorência ' + e.id))} isDeleted={isDeleted} isChanged={isChanged} onEdit={editAction} onDelete={deleteAction}/>)
+                    return(<Card key={e.id} id={e.id} content={(e.name ?? (e.id))} isDeleted={isDeleted} isChanged={isChanged} onEdit={editAction} onDelete={deleteAction}/>)
                 })}
             </div>
         </div>
