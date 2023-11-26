@@ -4,12 +4,12 @@ app = create_app()
 
 # setup database
 
-from api.common import db
-from tests.integration.mock import generate_fake_data
+# from api.common import db
+# from tests.integration.mock import generate_fake_data
 
-with app.app_context():
-    db.create_all()
-    generate_fake_data()
+# with app.app_context():
+#     db.create_all()
+#     generate_fake_data()
     
 @app.route("/")
 def index():
