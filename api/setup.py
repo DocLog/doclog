@@ -23,7 +23,7 @@ def create_app() -> Flask:
     _apply_app_settings(app)
     _setup_password_hasher(app)
     _setup_jwt(app)
-    _setup_rate_limiter(app)
+    # _setup_rate_limiter(app)
     _setup_database_interface(app)
     _setup_serializer(app)
     _setup_cors_policy(app)
