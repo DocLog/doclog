@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { getUserById, createUser } from '../../common/api';
 import GenericForm from "./GenericForm";
+import { showAlert } from "../../common/swalAlert";
 
 export default function UserFormCreate({ role, personId }){
     const navigate = useNavigate();
@@ -16,13 +17,17 @@ export default function UserFormCreate({ role, personId }){
             "healthcare_professional_id" : (role == '2' ? personId : null),
         }
         try{
-            console.log(data)
-            const response = await createUser(data)
-            console.log(response)
-            alert('Registro Criado com Sucesso!')
+            await createUser(data)
+            showAlert('Registro Criado com Sucesso!', 'success')
             navigate('/dashboard')
         }catch(err){
-            console.log('deerr')
+            if(err.response.status == 422){
+                showAlert('Erro ao Salvar os dados!', 'error')
+            }
+
+            if(err.response.status == 401){
+                showAlert('Não logado! Faça Login', 'error')
+            }
         }
     }
 
@@ -36,9 +41,9 @@ export default function UserFormCreate({ role, personId }){
                     email: ''
             }}
             fieldConfig={{
-                name : {type: 'text'},
-                password : {type: 'password'},
-                email : {type: 'email'}
+                name : {type: 'text', label: 'Nome', disabled: false},
+                password : {type: 'password', label: 'Senha', disabled: false},
+                email : {type: 'email', label: 'Email', disabled: false}
             }}
             onSubmit={submitForm}
             onLoad={getUserById}

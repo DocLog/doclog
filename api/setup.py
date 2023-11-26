@@ -38,7 +38,7 @@ def _apply_app_settings(app: Flask):
     """
 
     app.logger.debug("Applying app settings...")
-    db_conn_str = _get_database_connection_string()
+    db_conn_str = os.environ.get("DB_CONN_STR")
     access_token_expiration_limit = int(
         os.environ.get("ACCESS_TOKEN_EXPIRATION_TIME_IN_MINUTES")
     )
@@ -51,34 +51,6 @@ def _apply_app_settings(app: Flask):
             "PROPAGATE_EXCEPTIONS": True,
             "SQLALCHEMY_DATABASE_URI": db_conn_str,
         }
-    )
-
-
-def _get_database_connection_string() -> str:
-    """
-    Generate the database connection string for the SQL Server.
-
-    This function constructs the database connection string by reading environment
-    variables for the database server, name, user ID, and password.
-
-    Returns:
-        str: The database connection string.
-    """
-
-    server = os.environ.get("DB_SERVER")
-    database = os.environ.get("DB_NAME")
-    uid = os.environ.get("DB_UID")
-    password = os.environ.get("DB_PWD")
-
-    return (
-        "mssql+pyodbc:///?odbc_connect="
-        "driver={SQL Server};"
-        f"server={server};"
-        f"database={database};"
-        f"uid={uid};"
-        f"pwd={password};"
-        "encrypt=yes;"
-        "connection timeout=30;"
     )
 
 

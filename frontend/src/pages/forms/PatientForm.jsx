@@ -1,10 +1,10 @@
-import { useNavigate} from 'react-router-dom';
 import { getPatientRecordById, sendPatientRecord } from '../../common/api';
 import GenericForm from "./GenericForm";
+import { showAlert } from "../../common/swalAlert";
 
 export default function PatientForm( { onFinished } ){
-    const navigate = useNavigate();
     const d = new Date()
+
     async function submitForm(formData){
         let data = {
             "name" : formData.name,
@@ -16,13 +16,17 @@ export default function PatientForm( { onFinished } ){
             "notes": formData.notes
         }
         try{
-            console.log(data)
             const response = await sendPatientRecord(data)
-            console.log(response)
             onFinished(response)
-            alert('Registro Criado com Sucesso!')
+            showAlert('Registro Criado com Sucesso!', 'success')
         }catch(err){
-            console.log('deerr')
+            if(err.response.status == 422){
+                showAlert('Erro ao Salvar os dados!', 'error')
+            }
+
+            if(err.response.status == 401){
+                showAlert('Não logado! Faça Login', 'error')
+            }
         }
     }
 
@@ -38,12 +42,12 @@ export default function PatientForm( { onFinished } ){
                 notes: ''
             }}
             fieldConfig={{
-                name : { type: 'text' },
-                surname : { type: 'text'},
-                cpf :{ type: 'text'},
-                birth_date : {type: 'date'},
-                blood_type : {type: 'select', options: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']},
-                notes : {type: 'text'}
+                name : { type: 'text' ,label: 'Nome', disabled: false},
+                surname : { type: 'text', label: 'Sobrenome', disabled: false},
+                cpf :{ type: 'text', label: 'CPF', disabled: false},
+                birth_date : {type: 'date', label: 'Data de Nascimento', disabled: false},
+                blood_type : {type: 'select', options: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], label: 'Tipo Sanguíneo', disabled: false},
+                notes : {type: 'text', label: 'Observações', disabled: false}
             }}
             onSubmit={submitForm}
             onLoad={getPatientRecordById}

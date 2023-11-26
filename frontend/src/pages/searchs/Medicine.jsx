@@ -1,5 +1,5 @@
 
-import { deleteMedicineRecordById, getMedicineRecords } from '../../common/api'
+import { deleteMedicineRecordById, getMedicineRecords, getMedicineRecordByPatientId } from '../../common/api'
 import GenericSearch from './GenericSearch'
 
 export default function Medicine(){
@@ -12,6 +12,7 @@ export default function Medicine(){
         path='/form-medicine/'
         getRecords={getMedicineRecords}
         deleteRecord={deleteMedicineRecordById}
+        getRecordsFromPatient={getMedicineRecordByPatientId}
         isChanged='true'
         isDeleted='true'
        />

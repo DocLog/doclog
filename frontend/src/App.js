@@ -11,6 +11,12 @@ import Patient from "./pages/searchs/Patient";
 import PatientFormView from "./pages/forms/PatientFormView";
 import Profile from "./pages/Profile";
 import UserForm from "./pages/forms/UserForm";
+import Occurrence from "./pages/searchs/Occurrence";
+import OccurrenceForm from "./pages/forms/OccurrenceForm";
+import PatientMedicine from "./pages/searchs/PatientMedicine";
+import PatientMedicineForm from "./pages/forms/PatientMedicineForm";
+import PatientCondition from "./pages/searchs/PatientCondition";
+import PatientConditionForm from "./pages/forms/PatientConditionForm";
 
 function App() {
   return (
@@ -23,9 +29,23 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/medicines" element={<Medicine />}></Route>
             <Route path="/conditions" element={<Condition />}></Route>
+            <Route path="/medicines/:id" element={<Medicine />}></Route>
+
+            <Route path="/patient-medicine/:patient_id/:id?" element={<PatientMedicine />}></Route>
+            <Route path="/form-patient-medicine/:patient_id" element={<PatientMedicineForm />}></Route>
+            <Route path="/form-patient-medicine/:patient_id/:id" element={<PatientMedicineForm />}></Route>
+
+            <Route path="/patient-condition/:patient_id/:id?" element={<PatientCondition />}></Route>
+            <Route path="/form-patient-condition/:patient_id" element={<PatientConditionForm />}></Route>
+            <Route path="/form-patient-condition/:patient_id/:id" element={<PatientConditionForm />}></Route>
+
+            <Route path="/conditions/:id" element={<Condition />}></Route>
             <Route path="/patients" element={<Patient />}></Route>
+            <Route path="/occurrences/:patient_id/:id?" element={<Occurrence />}></Route>
             <Route path="/profile" element={<Profile />}/>
             <Route path="/form-user" element={<UserForm />}></Route>
+            <Route path="/form-occurrence/:patient_id" element={<OccurrenceForm />}></Route>
+            <Route path="/form-occurrence/:patient_id/:id" element={<OccurrenceForm />}></Route>
             <Route path="/form-medicine" element={<MedicineForm />} />
             <Route path="/form-medicine/:id" element={<MedicineForm />} />
             <Route path="/form-condition" element={<ConditionForm />} />
