@@ -11,8 +11,10 @@ export default function Login() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(isLogged){
+        if(isLogged && localStorage.getItem('user_role') !== '3'){
             navigate('/dashboard')
+        }else if(isLogged){
+            navigate('/form-patient/' + localStorage.getItem('user_id'))
         }
     }, [isLogged, navigate])
 

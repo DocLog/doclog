@@ -37,6 +37,18 @@ export default function PatientForm(){
         }
     }, [isLogged, navigate, id])
 
+    function handleOccurence(){
+        navigate('/occurrences/' + id)
+    }
+
+    function handleMedicines(){
+        navigate('/patient-medicine/' + id)
+    }
+
+    function handleConditions(){
+        navigate('/patient-condition/' + id)
+    }
+
     
 
     return(
@@ -45,9 +57,9 @@ export default function PatientForm(){
             <fieldset>
                 <legend>Ações</legend>
                 <div className={styles.actions}>
-                    <button className={styles.action}>Ocorrências</button>
-                    <button className={styles.action}>Medicamentos</button>
-                    <button className={styles.action}>Condições</button>
+                    <button className={styles.action} onClick={handleOccurence}>Ocorrências</button>
+                    <button className={styles.action} onClick={handleMedicines}>Medicamentos</button>
+                    <button className={styles.action} onClick={handleConditions}>Condições</button>
                 </div>
             </fieldset>
 
@@ -146,8 +158,8 @@ export default function PatientForm(){
 
                     </textarea>
                 </div>
+                <button className={styles.action} onClick={() => navigate(-1)}>Voltar</button>
                 </div>
-            
         </div>
     )
 }

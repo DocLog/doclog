@@ -1,11 +1,12 @@
-import { useNavigate} from 'react-router-dom';
-import { getMedicineRecordById, sendMedicineRecord } from '../../common/api';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getMedicineRecordById, sendMedicineRecord , updateMedicineRecord} from '../../common/api';
 import GenericForm from "./GenericForm";
+import { showAlert } from "../../common/swalAlert";
 
 export default function MedicineForm(){
     const navigate = useNavigate();
-
-
+    const { id } = useParams();
+    
     async function submitForm(formData){
         let data = {
             "name" : formData.name,
@@ -13,14 +14,26 @@ export default function MedicineForm(){
             "dosage" : Number(formData.dosage),
             "dosage_unit": formData.dosage_unit
         }
+
         try{
-            console.log(data)
-            const response = await sendMedicineRecord(data)
-            console.log(response)
-            alert('Registro Criado com Sucesso!')
+
+            if(id){
+                await updateMedicineRecord(id, data)
+            }else{
+                await sendMedicineRecord(data)
+            }
+            
+            showAlert('Registro Criado com Sucesso!', 'success')
             navigate('/medicines')
+
         }catch(err){
-            console.log('deerr')
+            if(err.response.status == 422){
+                showAlert('Erro ao Salvar os dados!', 'error')
+            }
+
+            if(err.response.status == 401){
+                showAlert('Não logado! Faça Login', 'error')
+            }
         }
     }
 
@@ -34,10 +47,10 @@ export default function MedicineForm(){
                 description: ''
             }}
             fieldConfig={{
-                name : { type: 'text' },
-                dosage : { type: 'number'},
-                dosage_unit : {type: 'select', options: ['mg', 'ml']},
-                description : {type: 'textarea'}
+                name : { type: 'text' , label: 'Nome do medicamento', disabled: false},
+                dosage : { type: 'number', label: 'Dosagem', disabled: false},
+                dosage_unit : {type: 'select', options: ['mg', 'ml'], label: 'Unidade da Dosagem', disabled: false},
+                description : {type: 'textarea', label: 'Descrição', disabled: false}
             }}
             onSubmit={submitForm}
             onLoad={getMedicineRecordById}
