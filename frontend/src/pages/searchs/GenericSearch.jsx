@@ -76,6 +76,7 @@ export default function GenericSearch({ placeholder, path, getRecords, getRecord
 
     return(
         <div className={styles.container_medicine}>
+            <button className={styles.action} onClick={() => navigate(-1)}>Voltar</button>
             <div id='search-area' className={styles.group}>
                 <input name='search' placeholder={placeholder} className={styles.input_medicine} onChange={(e) => {setTextSearch(e.target.value)}}></input>
                 <button className={styles.button_search} onClick={onSearch}>Pesquisar</button>

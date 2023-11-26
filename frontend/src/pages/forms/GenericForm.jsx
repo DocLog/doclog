@@ -141,6 +141,7 @@ export default function GenericForm({ title, initialValues, fieldConfig, onSubmi
             
             </div>
             <div className={styles.button_container}>
+                <button onClick={() => navigate(-1)}>Voltar</button>
                 <button onClick={submitForm}>Salvar</button>
             </div>
         

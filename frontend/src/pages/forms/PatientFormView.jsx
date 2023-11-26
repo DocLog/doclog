@@ -158,8 +158,8 @@ export default function PatientForm(){
 
                     </textarea>
                 </div>
+                <button className={styles.action} onClick={() => navigate(-1)}>Voltar</button>
                 </div>
-            
         </div>
     )
 }
