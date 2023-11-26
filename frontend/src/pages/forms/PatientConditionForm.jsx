@@ -1,6 +1,6 @@
 import { useNavigate} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getPatientConditionRecordById, sendPatientConditionRecord, getUserById, getProfessionalByCRM } from '../../common/api';
+import { getPatientConditionRecordById, sendPatientConditionRecord, updatePatientConditionRecord } from '../../common/api';
 import GenericForm from "./GenericForm";
 import { showAlert } from "../../common/swalAlert";
 
@@ -10,12 +10,16 @@ export default function PatientConditionForm(){
 
     async function submitForm(formData){
         let data = {
-            "patient_id": id ?? formData.patient_id,
+            "patient_id": patient_id,
             "condition_id": formData.condition_id,
             "notes" : formData.notes,
         }
         try{
-            await sendPatientConditionRecord(data)
+            if(id){
+                await updatePatientConditionRecord(id, data)
+            }else{
+                await sendPatientConditionRecord(data)
+            }
             showAlert('Registro Criado com Sucesso!', 'success')
             navigate('/patient-condition/' + formData.patient_id)
         }catch(err){
@@ -35,7 +39,7 @@ export default function PatientConditionForm(){
             title='Condições relacionadas ao paciente'
             initialValues={{
                 condition_id: '',
-                patient_id: id ?? '',
+                patient_id: patient_id,
                 notes: ''
             }}
             fieldConfig={{

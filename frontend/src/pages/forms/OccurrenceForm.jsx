@@ -1,13 +1,13 @@
 import { useNavigate} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getOccurrenceRecordById, sendOccurrenceRecord, getUserById, getProfessionalByCRM } from '../../common/api';
+import { getOccurrenceRecordById, sendOccurrenceRecord, updateOccurrenceRecord, getUserById, getProfessionalByCRM } from '../../common/api';
 import GenericForm from "./GenericForm";
 import { useEffect, useState } from 'react';
 import { showAlert } from "../../common/swalAlert";
 
 export default function OccurrenceForm(){
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { patient_id, id } = useParams();
     const [ healthId, setHealthId] = useState(null)
 
     const d = new Date()
@@ -19,12 +19,15 @@ export default function OccurrenceForm(){
             "was_emergency" : formData.was_emergency,
             "datetime" : d.getFullYear().toString() +'-' +(d.getMonth() + 1).toString() +'-' +d.getDate().toString() + 'T' + d.getHours().toString() + ':' + d.getMinutes().toString() + ':' + d.getSeconds().toString(),
             "notes" : formData.notes,
-            "patient_id": formData.patient_id,
+            "patient_id": patient_id,
             "healthcare_professional_id": healthId,
         }
         try{
-
-            await sendOccurrenceRecord(data)
+            if(id){
+                await updateOccurrenceRecord(id, data)
+            }else{
+                await sendOccurrenceRecord(data)
+            }
             showAlert('Registro Criado com Sucesso!', 'success')
             navigate('/occurrences/' + formData.patient_id)
 
@@ -62,15 +65,15 @@ export default function OccurrenceForm(){
                 was_emergency: '',
                 datetime: new Date(),
                 healthcare_professional_id: '',
-                patient_id: id,
+                patient_id: patient_id,
                 notes: ''
             }}
             fieldConfig={{
-                was_emergency: { type: 'checkbox' , label: 'É uma emergência?'},
-                datetime: { type: 'datetime-local', label: 'Data da Ocorrência'},
-                healthcare_professional_id: { type: 'text' , label: 'Id do Profissional'},
-                patient_id: {type: 'text', label: 'Id do Paciente'},
-                notes: {type: 'textarea', label: 'Observações'}
+                was_emergency: { type: 'checkbox' , label: 'É uma emergência?', disabled: false},
+                datetime: { type: 'datetime-local', label: 'Data da Ocorrência', disabled: false},
+                healthcare_professional_id: { type: 'text' , label: 'Id do Profissional', disabled: false},
+                patient_id: {type: 'text', label: 'Id do Paciente', disabled: true},
+                notes: {type: 'textarea', label: 'Observações', disabled: false}
             }}
             onSubmit={submitForm}
             onLoad={getOccurrenceRecordById}

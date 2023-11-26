@@ -39,8 +39,8 @@ export default function ConditionForm(){
             title='Condição'
             initialValues={{name: '', description: ''}}
             fieldConfig={{
-                name : {type: 'text', label: 'Nome'},
-                description : {type: 'textarea', label: 'Descrição'}
+                name : {type: 'text', label: 'Nome', disabled: false},
+                description : {type: 'textarea', label: 'Descrição', disabled: false}
             }}
             onSubmit={submitForm}
             onLoad={getConditionById}

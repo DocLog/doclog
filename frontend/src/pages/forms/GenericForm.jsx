@@ -60,7 +60,7 @@ export default function GenericForm({ title, initialValues, fieldConfig, onSubmi
     }
     
     function renderFields(fieldName, fieldData){
-        const { type, options, label} = fieldData
+        const { type, options, label, disabled} = fieldData
         if(type === 'textarea'){
             return(
             <>
@@ -115,6 +115,7 @@ export default function GenericForm({ title, initialValues, fieldConfig, onSubmi
                         id={fieldName}
                         name={fieldName}
                         value={formData[fieldName]}
+                        disabled={disabled}
                         onChange={(e) => handleFieldChange(fieldName, e.target.value)}
                     />
                 </>

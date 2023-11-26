@@ -41,9 +41,9 @@ export default function UserFormCreate({ role, personId }){
                     email: ''
             }}
             fieldConfig={{
-                name : {type: 'text', label: 'Nome'},
-                password : {type: 'password', label: 'Senha'},
-                email : {type: 'email', label: 'Email'}
+                name : {type: 'text', label: 'Nome', disabled: false},
+                password : {type: 'password', label: 'Senha', disabled: false},
+                email : {type: 'email', label: 'Email', disabled: false}
             }}
             onSubmit={submitForm}
             onLoad={getUserById}

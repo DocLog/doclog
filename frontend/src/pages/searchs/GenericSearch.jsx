@@ -13,7 +13,7 @@ export default function GenericSearch({ placeholder, path, getRecords, getRecord
     const [search, setSearch] = useState([])
     const [textSearch, setTextSearch] = useState('')
     const navigate = useNavigate()
-    const { id } = useParams()
+    const { patient_id } = useParams()
 
     useEffect(() => {
         handleGetRecords()
@@ -23,14 +23,14 @@ export default function GenericSearch({ placeholder, path, getRecords, getRecord
         if(!isLogged){
             navigate('/login')
         }
-    }, [isLogged, properties, navigate])
+    }, [isLogged, properties, navigate, search])
 
     async function handleGetRecords(){
-        if(id){
-            const { data } = await getRecordsFromPatient(id);
+        if(patient_id){
+            const { data } = await getRecordsFromPatient(patient_id);
 
             setProperties(data);
-            setSearch(properties);
+            setSearch(data);
         }else{
             const { data } = await getRecords();
 
@@ -52,11 +52,20 @@ export default function GenericSearch({ placeholder, path, getRecords, getRecord
 
 
     function addAction(e){
-        navigate(path)
+        if(patient_id){
+            navigate(path + patient_id)
+        }else{
+            navigate(path)
+        }
+
     }
 
     function editAction(e){
-        navigate(path+ e.target.id)
+        if(patient_id){
+            navigate(path +  patient_id + '/' + e.target.id)
+        }else{
+            navigate(path+ e.target.id)
+        }
     }
 
     function deleteAction(e){
@@ -70,7 +79,7 @@ export default function GenericSearch({ placeholder, path, getRecords, getRecord
             <div id='search-area' className={styles.group}>
                 <input name='search' placeholder={placeholder} className={styles.input_medicine} onChange={(e) => {setTextSearch(e.target.value)}}></input>
                 <button className={styles.button_search} onClick={onSearch}>Pesquisar</button>
-                <button className={styles.button_search} id={id} onClick={addAction}>Adicionar</button>
+                <button className={styles.button_search} id={patient_id} onClick={addAction}>Adicionar</button>
             </div>
             <div id='results' className={styles.box_medicine}>
                 { search.map(function(e) {

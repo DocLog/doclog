@@ -40,11 +40,11 @@ export default function HealthCareProfessionalForm( { onFinished } ){
                 crm: ''
             }}
             fieldConfig={{
-                name : { type: 'text' , label: 'Nome'},
-                surname : { type: 'text', label: 'Sobrenome'},
-                cpf :{ type: 'text', label: 'CPF'},
-                birth_date : {type: 'date', label: 'Data de Nascimento'},
-                crm : {type: 'text', label: 'CRM'}
+                name : { type: 'text' , label: 'Nome', disabled: false},
+                surname : { type: 'text', label: 'Sobrenome', disabled: false},
+                cpf :{ type: 'text', label: 'CPF', disabled: false},
+                birth_date : {type: 'date', label: 'Data de Nascimento', disabled: false},
+                crm : {type: 'text', label: 'CRM', disabled: false}
             }}
             onSubmit={submitForm}
             onLoad={getProfessionalById}

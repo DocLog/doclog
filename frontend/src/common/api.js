@@ -227,11 +227,11 @@ export function sendOccurrenceRecord(data){
     return axios.post(`${API_URI}/occurrence`, data)
 }
 
-export function updateOccurrenceRecord(data){
+export function updateOccurrenceRecord(id, data){
     axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8'
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
     
-    return axios.put(`${API_URI}/occurrence`, data)
+    return axios.put(`${API_URI}/occurrence/${id}`, data)
 }
 
 export function deleteOccurrenceRecordById(id){
@@ -261,11 +261,25 @@ export function sendPatientMedicineRecord(data){
     return axios.post(`${API_URI}/patient-medicine`, data)
 }
 
+export function updatePatientMedicineRecord(id, data){
+    axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8'
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.put(`${API_URI}/patient-medicine/${id}`, data)
+}
+
 export function sendPatientConditionRecord(data){
     axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8'
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
     
     return axios.post(`${API_URI}/patient-condition`, data)
+}
+
+export function updatePatientConditionRecord(id, data){
+    axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8'
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+    
+    return axios.put(`${API_URI}/patient-condition/${id}`, data)
 }
 
 export function getPatientMedicineRecordById(id){

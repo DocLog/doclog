@@ -42,12 +42,12 @@ export default function PatientForm( { onFinished } ){
                 notes: ''
             }}
             fieldConfig={{
-                name : { type: 'text' ,label: 'Nome'},
-                surname : { type: 'text', label: 'Sobrenome'},
-                cpf :{ type: 'text', label: 'CPF'},
-                birth_date : {type: 'date', label: 'Data de Nascimento'},
-                blood_type : {type: 'select', options: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], label: 'Tipo Sanguíneo'},
-                notes : {type: 'text', label: 'Observações'}
+                name : { type: 'text' ,label: 'Nome', disabled: false},
+                surname : { type: 'text', label: 'Sobrenome', disabled: false},
+                cpf :{ type: 'text', label: 'CPF', disabled: false},
+                birth_date : {type: 'date', label: 'Data de Nascimento', disabled: false},
+                blood_type : {type: 'select', options: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], label: 'Tipo Sanguíneo', disabled: false},
+                notes : {type: 'text', label: 'Observações', disabled: false}
             }}
             onSubmit={submitForm}
             onLoad={getPatientRecordById}

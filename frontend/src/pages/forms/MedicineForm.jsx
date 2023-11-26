@@ -47,10 +47,10 @@ export default function MedicineForm(){
                 description: ''
             }}
             fieldConfig={{
-                name : { type: 'text' , label: 'Nome do medicamento'},
-                dosage : { type: 'number', label: 'Dosagem'},
-                dosage_unit : {type: 'select', options: ['mg', 'ml'], label: 'Unidade da Dosagem'},
-                description : {type: 'textarea', label: 'Descrição'}
+                name : { type: 'text' , label: 'Nome do medicamento', disabled: false},
+                dosage : { type: 'number', label: 'Dosagem', disabled: false},
+                dosage_unit : {type: 'select', options: ['mg', 'ml'], label: 'Unidade da Dosagem', disabled: false},
+                description : {type: 'textarea', label: 'Descrição', disabled: false}
             }}
             onSubmit={submitForm}
             onLoad={getMedicineRecordById}
