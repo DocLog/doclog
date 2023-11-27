@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API_URI = "/api/v1"
+const API_URI = "https://doclog.azurewebsites.net/api/v1"
 
 
 // Condition CRUD
