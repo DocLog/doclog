@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API_URI = "http://127.0.0.1:5000/api/v1"
+const API_URI = "/api/v1"
 
 
 // Condition CRUD
